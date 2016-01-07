@@ -5,18 +5,17 @@ class Panda
     @name, @email, @gender = name, email, gender
   end
 
-   def to_s
-     "Name: #{name}, email: #{email}, gender: #{gender}"
-   end
+  def to_s
+    "Name: #{name}, email: #{email}, gender: #{gender}"
+  end
 
-   def male?
-     gender == "male"
-   end
+  def male?
+    gender == "male"
+  end
 
-   def female?
-     gender == "female"
-   end
-
+  def female?
+    gender == "female"
+  end
 
   def equal?(other)
     name == other.name &&
@@ -69,7 +68,6 @@ class PandaSocialNetwork
   end
 end
 
-
 network = PandaSocialNetwork.new
 ivo = Panda.new("Ivo", "ivo@pandamail.com", "male")
 ivo2 = Panda.new("Ivo", "ivo@pandamail.com", "male")
@@ -89,3 +87,4 @@ p ivo2.hash
 network.make_friends(ivo, rado)
 network.make_friends(ivo, tony)
 p network.are_friends(ivo, rado)
+
