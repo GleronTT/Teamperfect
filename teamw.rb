@@ -36,6 +36,19 @@ class PandaSocialNetwork
     def add_panda(panda)
     	network[panda] = []
     end
+    def bfs(start)
+      q = Queue.new
+      visited = Set.new
+      q << [0,start]
+      visited << start
+      until q.empty?
+      	level, current = q.pop
+      un = @graph[current].select{ |v| !visited member? v}
+      un.each do |v|
+      	visited << v 
+      	q << [level + 1 , v]
+      end
+    end
     def has_panda(panda)
     	if network.has_key?(panda)
     		return true
