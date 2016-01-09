@@ -1,5 +1,5 @@
 class Panda
-  attr_accessor :name, :email, :gender
+  attr_acecssor :name, :email, :gender
 
   def initialize(name, email, gender)
     @name, @email, @gender = name, email, gender
@@ -34,7 +34,6 @@ class Panda
   alias_method :eql?, :==
 end
 
-
 class PandaSocialNetwork
   attr_reader :network
 
@@ -68,23 +67,4 @@ class PandaSocialNetwork
   end
 end
 
-network = PandaSocialNetwork.new
-ivo = Panda.new("Ivo", "ivo@pandamail.com", "male")
-ivo2 = Panda.new("Ivo", "ivo@pandamail.com", "male")
-rado = Panda.new("Rado", "rado@pandamail.com", "male")
-tony = Panda.new("Tony", "tony@pandamail.com", "female")
-
-network.add_panda(ivo)
-network.add_panda(rado)
-network.add_panda(tony)
-#network.add_panda(ivo2)
-
-p ivo.name == "Ivo"
-p ivo.equal? ivo2
-p ivo.hash
-p ivo2.hash
-
-network.make_friends(ivo, rado)
-network.make_friends(ivo, tony)
-p network.are_friends(ivo, rado)
 
