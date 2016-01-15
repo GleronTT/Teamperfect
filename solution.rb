@@ -41,38 +41,35 @@ class PandaSocialNetwork
 
   def initialize
     @network = Hash.new []
+    @panda_ids = {}
   end
 
   def add_panda(panda)
-    if has_panda(panda)
-      raise "PandaAlreadyThere"
-    else
-      network[panda] = []
-    end
+    raise "PandaAlreadyThere" if has_panda(panda)
+    network[panda] = []
+    set_id(panda)
   end
 
   def has_panda(panda)
-    if network.has_key?(panda)
-      return true
-    else
-      return false
-    end
+    network.has_key?(panda)
   end
 
+  # TODO - raise exception if pandas already exist; add pandas if they're not in the network
   def make_friends(panda1, panda2)
     network[panda1] << panda2
     network[panda2] << panda1
   end
 
   def are_friends(panda1, panda2)
-    network[panda1].include?(panda2) and network[panda2].include?(panda1)
+    network[panda1].include?(panda2) && network[panda2].include?(panda1)
   end
 
   def friends_of(panda)
     return false unless has_panda(panda)
-    result = []
-    @network[panda].each { |friend| result << friend }
-    result
+    network[panda]
+    # result = []
+    # network[panda].each { |friend| result << friend }
+    # result
   end
 
   def bfs(start, panda)
@@ -101,8 +98,7 @@ class PandaSocialNetwork
   end
 
   def are_connected(panda1, panda2)
-    return false if connection_level(panda1, panda2) == -1
-    true
+    connection_level(panda1, panda2) > -1
   end
 
   def how_many_gender_in_network(start_level, panda, gender)
@@ -116,7 +112,7 @@ class PandaSocialNetwork
     until queue.empty?
 
       level, current = queue.pop
-      count_gender += 1 if start_level == level and current.gender == gender
+      count_gender += 1 if start_level == level && current.gender == gender
 
       un = network[current].select {|v| !visited.member? v}
       un.each do |v|
@@ -129,9 +125,25 @@ class PandaSocialNetwork
 
   def save(file_name)
     File.open(file_name + ".txt", 'w') do |file|
-      file.puts network
+      network.each do |panda, friends|
+        file.puts "#{panda}; friends: #{friends.map(&:name).join(', ')}"
+      end
     end
   end
+
+  def load()
+  end
+
+  private
+
+  def set_id(panda)
+    @panda_ids[panda] = @panda_ids.count
+  end
+
+  def get_id(panda)
+    @panda_ids[panda]
+  end
+
 end
 
 network = PandaSocialNetwork.new
